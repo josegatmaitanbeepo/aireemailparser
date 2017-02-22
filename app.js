@@ -4,6 +4,7 @@ methodOverride = require("method-override"),
 mongoose       = require("mongoose"),
 Email = require("./models/email"),
 express        = require("express"),
+request = require("request"),
 app            = express();
     
     
@@ -48,6 +49,16 @@ app.post("/email", function(req, res){
             } else {
                 console.log("successfully saved to email queue");
                 console.log(mail);
+                //call the main app api
+                request.post(
+                    'http://https://agentai-iscampbell.c9users.io/conversation',
+                    { json: {from: from, to: to, subject: subject, text: text, html:html} },
+                    function (error, response, body) {
+                        if (!error && response.statusCode == 200) {
+                            console.log(body);
+                        }
+                    }
+                );              
             }
         });
         res.writeHead(200, {'content-type': 'text/plain'});
