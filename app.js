@@ -53,7 +53,8 @@ app.post("/email", function(req, res){
                 var options = {
                   uri: 'https://agentai-iscampbell.c9users.io/conversation',
                   method: 'POST',
-                  json: {
+                  json: true,   
+                  body: {
                     "from": from, "to": to, "subject": subject, "text": text, "html":html
                   }
                 };
