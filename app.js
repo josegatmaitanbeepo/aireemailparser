@@ -43,6 +43,7 @@ app.post("/email", function(req, res){
         var html = fields["html"][0];
 
         var mail = new Email({from: from, to: to, subject: subject, text: text, html:html});
+        var mailJson = {"from": from, "to": to, "subject": subject, "message": text, "html":html};
         Email.create(mail, function(err, newlyCreated){
             if (err) {
                 console.log(err);
@@ -54,9 +55,7 @@ app.post("/email", function(req, res){
                   uri: 'https://agentai-iscampbell.c9users.io/conversation',
                   method: 'POST',
                   json: true,   
-                  body: {
-                    "from": from, "to": to, "subject": subject, "text": text, "html":html
-                  }
+                  body: mailJson
                 };
     
                 request(options, function (error, response, body) {
