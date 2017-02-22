@@ -52,7 +52,7 @@ app.post("/email", function(req, res){
                 console.log(mail);
                 //call the main app api
                 var options = {
-                  uri: 'https://agentai-iscampbell.c9users.io/conversation',
+                  uri: 'https://lit-forest-43973.herokuapp.com/conversation',
                   method: 'POST',
                   json: true,   
                   body: mailJson
