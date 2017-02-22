@@ -14,6 +14,10 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(methodOverride("_method"));
+
+app.get("/", function(req,res) {
+    res.send("the email server is up and running");
+});
  
 app.post("/email", function(req, res){
     //console.log(req.body);
