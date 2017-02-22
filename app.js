@@ -50,15 +50,20 @@ app.post("/email", function(req, res){
                 console.log("successfully saved to email queue");
                 console.log(mail);
                 //call the main app api
-                request.post(
-                    'http://https://agentai-iscampbell.c9users.io/conversation',
-                    { json: {from: from, to: to, subject: subject, text: text, html:html} },
-                    function (error, response, body) {
-                        if (!error && response.statusCode == 200) {
-                            console.log(body);
-                        }
-                    }
-                );              
+                var options = {
+                  uri: 'https://agentai-iscampbell.c9users.io/conversation',
+                  method: 'POST',
+                  json: {
+                    "from": from, "to": to, "subject": subject, "text": text, "html":html
+                  }
+                };
+    
+                request(options, function (error, response, body) {
+                  if (error) {
+                    console.log(err);
+                  }
+                });                
+             
             }
         });
         res.writeHead(200, {'content-type': 'text/plain'});
