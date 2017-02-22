@@ -73,6 +73,15 @@ app.post("/email", function(req, res){
   });
 });
 
+//events
+app.post('/event', function (req, res) {
+  var events = req.body;
+  events.forEach(function (event) {
+    // Here, you now have each event and can process them how you like
+    console.log(event);
+  });
+});
+
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("email parser is on!");
 });
