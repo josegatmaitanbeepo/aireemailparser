@@ -44,7 +44,7 @@ app.post("/email", function(req, res){
         }                
         var to = fields["to"][0];
         if (to.indexOf("@parse.candotech.com.au")){
-            to = to.slice(to.indexOf("@parse.candotech.com.au")-24,to.indexOf("parse.candotech.com.au"));
+            to = to.slice(to.indexOf("@parse.candotech.com.au")-24,to.indexOf("parse.candotech.com.au")-1);
         }      
         var subject = "";
         subject = fields["subject"][0];
