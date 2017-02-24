@@ -38,9 +38,17 @@ app.post("/email", function(req, res){
         if (to.indexOf("<")){
             to = to.slice(to.indexOf("<")+1,to.indexOf(">"));
         }                
-        var text = fields["text"][0];
+        if (fields["text"]) {
+          var text = fields["text"][0];
+        } else {
+          var text = "";
+        }
         var subject = fields["subject"][0];
-        var html = fields["html"][0];
+        if (fields["html"]) {
+          var html = fields["html"][0];
+        } else {
+          var html = "";
+        }
 
         var mail = new Email({from: from, to: to, subject: subject, text: text, html:html});
         var mailJson = {"from": from, "to": to, "subject": subject, "message": text, "html":html};
@@ -63,6 +71,7 @@ app.post("/email", function(req, res){
                     console.log(err);
                   }
                   console.log("Response from main app:" + response);
+                  console.log("Body from main app:" + body);
                 });                
              
             }
