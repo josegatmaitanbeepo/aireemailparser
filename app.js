@@ -40,11 +40,11 @@ app.post("/email", function(req, res){
         }
         var from = fields["from"][0];
         if (from.indexOf("<")){
-            from = from.slice(from.indexOf("<")+1,from.indexOf(">")+1);
+            from = from.slice(from.indexOf("<")+1,from.indexOf(">"));
         }                
         var to = fields["to"][0];
-        if (to.indexOf("<")){
-            to = to.slice(to.indexOf("<")+1,to.indexOf(">")+1);
+        if (to.indexOf("@parse.candotech.com.au")){
+            to = to.slice(to.indexOf("@parse.candotech.com.au")-24,to.indexOf("parse.candotech.com.au"));
         }      
         var subject = "";
         subject = fields["subject"][0];
