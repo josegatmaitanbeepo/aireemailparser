@@ -38,16 +38,22 @@ app.post("/email", function(req, res){
         if (fields["html"]) {
           html = fields["html"][0];
         }
+        var subject = "";
+        if (fields["subject"]) {
+          subject = fields["subject"][0];
+        }
         var from = fields["from"][0];
         if (from.indexOf("<")){
             from = from.slice(from.indexOf("<")+1,from.indexOf(">"));
         }                
+        if (from.indexOf("realestate.com.au@realestate.com.au") && subject.indexOf("Property Enquiry for Property ID")){
+            from = html.slice(html.indexOf("Email:")+7,html.indexOf("</p>",html.indexOf("Email:")));
+        }                
+
         var to = fields["to"][0];
         if (to.indexOf("@parse.candotech.com.au")){
             to = to.slice(to.indexOf("@parse.candotech.com.au")-24,to.indexOf("parse.candotech.com.au")-1);
         }      
-        var subject = "";
-        subject = fields["subject"][0];
 
 
         var mail = new Email({from: from, to: to, subject: subject, text: text, html:html, jsonPayload: fields});
