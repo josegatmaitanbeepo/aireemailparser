@@ -29,28 +29,28 @@ app.post("/email", function(req, res){
       if(err){
         console.log(err);
       } else {
-
+        
+        var text = "";
+        if (fields["text"]) {
+          text = fields["text"][0];
+        } 
+        var html = "";
+        if (fields["html"]) {
+          html = fields["html"][0];
+        }
         var from = fields["from"][0];
         if (from.indexOf("<")){
-            from = from.slice(from.indexOf("<")+1,from.indexOf(">"));
+            from = from.slice(from.indexOf("<")+1,from.indexOf(">")+1);
         }                
         var to = fields["to"][0];
         if (to.indexOf("<")){
-            to = to.slice(to.indexOf("<")+1,to.indexOf(">"));
-        }                
-        if (fields["text"]) {
-          var text = fields["text"][0];
-        } else {
-          var text = "";
-        }
-        var subject = fields["subject"][0];
-        if (fields["html"]) {
-          var html = fields["html"][0];
-        } else {
-          var html = "";
-        }
+            to = to.slice(to.indexOf("<")+1,to.indexOf(">")+1);
+        }      
+        var subject = "";
+        subject = fields["subject"][0];
 
-        var mail = new Email({from: from, to: to, subject: subject, text: text, html:html});
+
+        var mail = new Email({from: from, to: to, subject: subject, text: text, html:html, jsonPayload: JSON.stringify(fields)});
         var mailJson = {"from": from, "to": to, "subject": subject, "message": text, "html":html};
         Email.create(mail, function(err, newlyCreated){
             if (err) {
