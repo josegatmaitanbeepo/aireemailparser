@@ -50,7 +50,7 @@ app.post("/email", function(req, res){
         subject = fields["subject"][0];
 
 
-        var mail = new Email({from: from, to: to, subject: subject, text: text, html:html, jsonPayload: JSON.stringify(fields)});
+        var mail = new Email({from: from, to: to, subject: subject, text: text, html:html, jsonPayload: fields});
         var mailJson = {"from": from, "to": to, "subject": subject, "message": text, "html":html};
         Email.create(mail, function(err, newlyCreated){
             if (err) {
