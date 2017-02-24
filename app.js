@@ -43,15 +43,15 @@ app.post("/email", function(req, res){
           subject = fields["subject"][0];
         }
         var from = fields["from"][0];
-        if (from.indexOf("<")){
+        if (from.indexOf("<") > 0){
             from = from.slice(from.indexOf("<")+1,from.indexOf(">"));
         }                
-        if (from.indexOf("realestate.com.au@realestate.com.au") && subject.indexOf("Property Enquiry for Property ID")){
+        if (from.indexOf("realestate.com.au@realestate.com.au") > 0 && subject.indexOf("Property Enquiry for Property ID") > 0){
             from = html.slice(html.indexOf("Email:")+7,html.indexOf("</p>",html.indexOf("Email:")));
         }                
 
         var to = fields["to"][0];
-        if (to.indexOf("@parse.candotech.com.au")){
+        if (to.indexOf("@parse.candotech.com.au") > 0){
             to = to.slice(to.indexOf("@parse.candotech.com.au")-24,to.indexOf("parse.candotech.com.au")-1);
         }      
 
