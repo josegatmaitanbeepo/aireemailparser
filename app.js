@@ -46,7 +46,7 @@ app.post("/email", function(req, res){
         if (from.indexOf("<") > 0){
             from = from.slice(from.indexOf("<")+1,from.indexOf(">"));
         }                
-        if (from.indexOf("realestate.com.au@realestate.com.au") > 0 && subject.indexOf("Property Enquiry for Property ID") > 0){
+        if (from.indexOf("realestate.com.au@realestate.com.au") > 0 && subject.indexOf("Enquiry for Property ID") > 0){
             from = html.slice(html.indexOf("Email:")+7,html.indexOf("</p>",html.indexOf("Email:")));
         }                
 
