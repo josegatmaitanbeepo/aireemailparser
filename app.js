@@ -45,8 +45,10 @@ app.post("/email", function(req, res){
         var from = fields["from"][0];
         if (from.indexOf("<") > 0){
             from = from.slice(from.indexOf("<")+1,from.indexOf(">"));
-        }                
-        if (from.indexOf("realestate.com.au@realestate.com.au") > 0 && subject.indexOf("Enquiry for Property ID") > 0){
+        }
+        
+        //rea data extraction
+        if (from === "realestate.com.au@realestate.com.au" && subject.indexOf("Enquiry for Property ID") > 0){
             from = html.slice(html.indexOf("Email:")+7,html.indexOf("</p>",html.indexOf("Email:")));
         }                
 
@@ -57,11 +59,12 @@ app.post("/email", function(req, res){
 
 
         var mail = new Email({from: from, to: to, subject: subject, text: text, html:html, jsonPayload: fields});
-        var mailJson = {"from": from, "to": to, "subject": subject, "message": text, "html":html};
+
         Email.create(mail, function(err, newlyCreated){
             if (err) {
                 console.log(err);
             } else {
+                var mailJson = {"from": from, "to": to, "subject": subject, "message": text, "html":html, "email": newlyCreated._id};
                 console.log("successfully saved to email queue");
                 console.log(mail);
                 //call the main app api
