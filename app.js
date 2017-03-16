@@ -97,7 +97,7 @@ app.post('/event', function (req, res) {
   var events = req.body;
   events.forEach(function (event) {
     // Here, you now have each event and can process them how you like
-    //console.log(event);
+    console.log(event);
   });
 });
 

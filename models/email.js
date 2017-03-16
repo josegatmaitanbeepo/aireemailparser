@@ -8,7 +8,7 @@ var emailSchema = mongoose.Schema({
     html: String,
     dateReceived: { type: Date, default: Date.now },
     processed: {type: Boolean(), default: false},
-    jsonPayload: {},
+    jsonPayload: {}
 });
 
 module.exports = mongoose.model("Email", emailSchema);
