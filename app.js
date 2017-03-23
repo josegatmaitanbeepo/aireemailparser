@@ -55,7 +55,10 @@ app.post("/email", function(req, res){
         var to = fields["to"][0];
         if (to.indexOf("@parse.candotech.com.au") > 0){
             to = to.slice(to.indexOf("@parse.candotech.com.au")-24,to.indexOf("parse.candotech.com.au")-1);
+        } else if (to.indexOf("@parse.getaire.com.au") > 0){
+            to = to.slice(to.indexOf("@parse.getaire.com.au")-24,to.indexOf("parse.getaire.com.au")-1);
         }      
+
 
 
         var mail = new Email({from: from, to: to, subject: subject, text: text, html:html, jsonPayload: fields});
