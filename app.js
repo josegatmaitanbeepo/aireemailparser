@@ -59,15 +59,13 @@ app.post("/email", function(req, res){
             to = to.slice(to.indexOf("@parse.getaire.com.au")-24,to.indexOf("parse.getaire.com.au")-1);
         }      
 
-
-
         var mail = new Email({from: from, to: to, subject: subject, text: text, html:html, jsonPayload: fields});
 
         Email.create(mail, function(err, newlyCreated){
             if (err) {
                 console.log(err);
             } else {
-                var mailJson = {"from": from, "to": to, "subject": subject, "message": text, "html":html, "email": newlyCreated._id};
+                var mailJson = {"from": from, "to": to, "subject": subject, "message": text, "html":html, "email": newlyCreated._id, "jsonPayload": newlyCreated.jsonPayload};
                 console.log("successfully saved to email queue");
                 console.log(mail);
                 //call the main app api
@@ -101,6 +99,8 @@ app.post('/event', function (req, res) {
   events.forEach(function (event) {
     // Here, you now have each event and can process them how you like
     console.log(event);
+
+    res.end('{"success" : "Updated Successfully", "status" : 200}');
   });
 });
 

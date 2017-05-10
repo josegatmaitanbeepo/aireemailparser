@@ -3,6 +3,7 @@ var mongoose = require("mongoose");
 var emailSchema = mongoose.Schema({
     from: String,
     to: String,
+    aireEmails: [],
     subject: String,
     text: String,
     html: String,
