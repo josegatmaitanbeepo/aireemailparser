@@ -23,14 +23,17 @@ app.get("/", function(req,res) {
 app.post("/email", function(req, res){
 	console.log(req.body);
 	console.log(req.query);
-	/*var form = new multiparty.Form();
+
+	var form = new multiparty.Form();
 
 	form.parse(req, function(err, fields, files) {
-			
-		if(err){
+		if (err) {
 			console.log(err);
-		} else {
-			
+		}
+		else {
+			console.log(JSON.stringify(fields), fields);
+			console.log(JSON.stringify(files), files);
+			/*
 			var text = "";
 			if (fields["text"]) {
 				text = fields["text"][0];
@@ -48,12 +51,13 @@ app.post("/email", function(req, res){
 					from = from.slice(from.indexOf("<")+1,from.indexOf(">"));
 			}
 			
-			//rea data extraction
+			// Rea data extraction
 			if (from === "realestate.com.au@realestate.com.au" && subject.indexOf("Enquiry for Property ID") > 0){
 					from = html.slice(html.indexOf("Email:")+7,html.indexOf("</p>",html.indexOf("Email:")));
 			}
 
 			var to = fields["to"][0];
+
 			if (to.indexOf("@parse.candotech.com.au") > 0){
 					to = to.slice(to.indexOf("@parse.candotech.com.au")-24,to.indexOf("parse.candotech.com.au")-1);
 			} else if (to.indexOf("@parse.getaire.com.au") > 0){
@@ -86,12 +90,12 @@ app.post("/email", function(req, res){
 							});                
 					 
 					}
-			});
+			});*/
 			res.writeHead(200, {'content-type': 'text/plain'});
 			res.write('received upload:\n\n');
 			res.end("thanks");          
 		}
-	});*/
+	});
 });
 
 //events
