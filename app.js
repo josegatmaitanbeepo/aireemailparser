@@ -11,7 +11,7 @@ app            = express();
 // Function Defenitions
 
 	var retMessageID = function(str) {
-		return str.substring(str.lastIndexOf("<")+1, str.lastIndexOf(">"))
+		return str.substring(str.lastIndexOf("Message-ID: <")+13, str.lastIndexOf(">"))
 	};	
 		
 // APP CONFIG
@@ -41,7 +41,7 @@ app            = express();
 
 				// console.log(JSON.stringify(fields));
 				// console.log(JSON.stringify(files));
-
+				
 				var msgID = retMessageID(fields["headers"][0]);
 
 				console.log(msgID);
@@ -69,14 +69,14 @@ app            = express();
 					from = html.slice(html.indexOf("Email:")+7,html.indexOf("</p>",html.indexOf("Email:")));
 				}
 
-				var to = fields["to"][0];
+				var to = fields["to"];
 
-				if (to.indexOf("@parse.candotech.com.au") > 0) {
+				/*if (to.indexOf("@parse.candotech.com.au") > 0) {
 					to = to.slice(to.indexOf("@parse.candotech.com.au")-24,to.indexOf("parse.candotech.com.au")-1);
 				}
 				else if (to.indexOf("@parse.getaire.com.au") > 0) {
 					to = to.slice(to.indexOf("@parse.getaire.com.au")-24,to.indexOf("parse.getaire.com.au")-1);
-				}
+				}*/
 
 				var mail = new Email({from: from, to: to, messageID: msgID, subject: subject, text: text, html:html, jsonPayload: fields});
 
