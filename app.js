@@ -11,7 +11,7 @@ app            = express();
 // Function Defenitions
 
 	var retMessageID = function(str) {
-		return str.substring(str.lastIndexOf("Message-ID: <")+13, str.lastIndexOf(">"))
+		return str.substring(str.lastIndexOf("Message-ID: <")+13, (str.lastIndexOf(">\n") !== -1? str.lastIndexOf(">\n")  : str.lastIndexOf(">↵")));
 	};	
 		
 // APP CONFIG
@@ -41,7 +41,7 @@ app            = express();
 
 				// console.log(JSON.stringify(fields));
 				// console.log(JSON.stringify(files));
-				
+
 				var msgID = retMessageID(fields["headers"][0]);
 
 				console.log(msgID);
