@@ -42,9 +42,11 @@ app            = express();
 				// console.log(JSON.stringify(fields));
 				// console.log(JSON.stringify(files));
 
-				console.log(retMessageID(fields["headers"][0]));
+				var msgID = retMessageID(fields["headers"][0])
+
+				console.log(msgID);
 				
-				/*var text = "";
+				var text = "";
 				if (fields["text"]) {
 					text = fields["text"][0];
 				} 
@@ -78,46 +80,59 @@ app            = express();
 
 				var mail = new Email({from: from, to: to, subject: subject, text: text, html:html, jsonPayload: fields});
 
-				Email.create(mail, function(err, newlyCreated){
-					if (err) {
-							console.log(err);
+				Email.find({"messageID": msgID}, function(err1, check) {
+					if (err1) {
+						console.log(err1);
 					}
 					else {
-						var mailJson = {
-							"from": from,
-							"to": to,
-							"messageID": fields["headers"]
-							"subject": subject,
-							"message": text,
-							"html": html,
-							"email": newlyCreated._id,
-							"jsonPayload": newlyCreated.jsonPayload
-						};
+						if (check.length > 0) {
+							console.log("Already have that message ID");
+						}
+						else {
+							Email.create(mail, function(err2, newlyCreated){
+								if (err2) {
+										console.log(err2);
+								}
+								else {
+									var mailJson = {
+										"from": from,
+										"to": to,
+										"messageID": msgID,
+										"subject": subject,
+										"message": text,
+										"html": html,
+										"email": newlyCreated._id,
+										"jsonPayload": newlyCreated.jsonPayload
+									};
 
-						console.log("successfully saved to email queue");
-						console.log(mail);
+									console.log("Successfully saved to email queue");
+									console.log(mail);
 
-						//call the main app api
+									// call the main app api
 
-						var options = {
-							uri: 'https://morning-retreat-82821.herokuapp.com/conversation',
-							method: 'POST',
-							json: true,   
-							body: mailJson
-						};
+									/*var options = {
+										uri: 'https://morning-retreat-82821.herokuapp.com/conversation',
+										method: 'POST',
+										json: true,   
+										body: mailJson
+									};
 
-						request(options, function (error, response, body) {
-							if (error) {
-								console.log(err);
-							}
-							console.log("Response from main app:" + response);
-							console.log("Body from main app:" + body);
-						});
+									request(options, function (err3, response, body) {
+										if (err3) {
+											console.log(err3);
+										}
+										console.log("Response from main app:" + response);
+										console.log("Body from main app:" + body);
+									});*/
+								}
+							});
+						}
 					}
 				});
+
 				res.writeHead(200, {'content-type': 'text/plain'});
 				res.write('received upload:\n\n');
-				res.end("thanks");*/
+				res.end("thanks");
 			}
 		});
 	});
