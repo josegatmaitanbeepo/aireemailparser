@@ -69,7 +69,7 @@ app            = express();
 					from = html.slice(html.indexOf("Email:")+7,html.indexOf("</p>",html.indexOf("Email:")));
 				}
 
-				var to = fields["envelope"].to[0];
+				var to = fields["to"][0];
 
 				if (to.indexOf("@parse.candotech.com.au") > 0) {
 					to = to.slice(to.indexOf("@parse.candotech.com.au")-24,to.indexOf("parse.candotech.com.au")-1);
