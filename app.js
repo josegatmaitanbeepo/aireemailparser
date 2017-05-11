@@ -42,7 +42,7 @@ app            = express();
 				// console.log(JSON.stringify(fields));
 				// console.log(JSON.stringify(files));
 
-				var msgID = retMessageID(fields["headers"][0])
+				var msgID = retMessageID(fields["headers"][0]);
 
 				console.log(msgID);
 				
@@ -78,7 +78,7 @@ app            = express();
 					to = to.slice(to.indexOf("@parse.getaire.com.au")-24,to.indexOf("parse.getaire.com.au")-1);
 				}
 
-				var mail = new Email({from: from, to: to, subject: subject, text: text, html:html, jsonPayload: fields});
+				var mail = new Email({from: from, to: to, messageID: msgID, subject: subject, text: text, html:html, jsonPayload: fields});
 
 				Email.find({"messageID": msgID}, function(err1, check) {
 					if (err1) {
@@ -108,7 +108,7 @@ app            = express();
 									console.log("Successfully saved to email queue");
 									console.log(mail);
 
-									// call the main app api
+									// Call the main app api
 
 									/*var options = {
 										uri: 'https://morning-retreat-82821.herokuapp.com/conversation',
