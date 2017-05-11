@@ -110,7 +110,7 @@ app            = express();
 
 									// Call the main app api
 
-									/*var options = {
+									var options = {
 										uri: 'https://morning-retreat-82821.herokuapp.com/conversation',
 										method: 'POST',
 										json: true,   
@@ -123,7 +123,7 @@ app            = express();
 										}
 										console.log("Response from main app:" + response);
 										console.log("Body from main app:" + body);
-									});*/
+									});
 								}
 							});
 						}
