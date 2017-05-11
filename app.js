@@ -42,8 +42,7 @@ app            = express();
 				// console.log(JSON.stringify(fields));
 				// console.log(JSON.stringify(files));
 
-				console.log(fields)
-				// retMessageID();
+				console.log(retMessageID(fields["headers"][0]));
 				
 				/*var text = "";
 				if (fields["text"]) {
