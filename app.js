@@ -27,70 +27,70 @@ app.post("/email", function(req, res){
 
 	form.parse(req, function(err, fields, files) {
 			
-			if(err){
-				console.log(err);
-			} else {
-				
-				var text = "";
-				if (fields["text"]) {
-					text = fields["text"][0];
-				} 
-				var html = "";
-				if (fields["html"]) {
-					html = fields["html"][0];
-				}
-				var subject = "";
-				if (fields["subject"]) {
-					subject = fields["subject"][0];
-				}
-				var from = fields["from"][0];
-				if (from.indexOf("<") > 0){
-						from = from.slice(from.indexOf("<")+1,from.indexOf(">"));
-				}
-				
-				//rea data extraction
-				if (from === "realestate.com.au@realestate.com.au" && subject.indexOf("Enquiry for Property ID") > 0){
-						from = html.slice(html.indexOf("Email:")+7,html.indexOf("</p>",html.indexOf("Email:")));
-				}                
-
-				var to = fields["to"][0];
-				if (to.indexOf("@parse.candotech.com.au") > 0){
-						to = to.slice(to.indexOf("@parse.candotech.com.au")-24,to.indexOf("parse.candotech.com.au")-1);
-				} else if (to.indexOf("@parse.getaire.com.au") > 0){
-						to = to.slice(to.indexOf("@parse.getaire.com.au")-24,to.indexOf("parse.getaire.com.au")-1);
-				}      
-
-				var mail = new Email({from: from, to: to, subject: subject, text: text, html:html, jsonPayload: fields});
-
-				Email.create(mail, function(err, newlyCreated){
-						if (err) {
-								console.log(err);
-						} else {
-								var mailJson = {"from": from, "to": to, "subject": subject, "message": text, "html":html, "email": newlyCreated._id, "jsonPayload": newlyCreated.jsonPayload};
-								console.log("successfully saved to email queue");
-								console.log(mail);
-								//call the main app api
-								var options = {
-									uri: 'https://morning-retreat-82821.herokuapp.com/conversation',
-									method: 'POST',
-									json: true,   
-									body: mailJson
-								};
-		
-								request(options, function (error, response, body) {
-									if (error) {
-										console.log(err);
-									}
-									console.log("Response from main app:" + response);
-									console.log("Body from main app:" + body);
-								});                
-						 
-						}
-				});
-				res.writeHead(200, {'content-type': 'text/plain'});
-				res.write('received upload:\n\n');
-				res.end("thanks");          
+		if(err){
+			console.log(err);
+		} else {
+			
+			var text = "";
+			if (fields["text"]) {
+				text = fields["text"][0];
+			} 
+			var html = "";
+			if (fields["html"]) {
+				html = fields["html"][0];
 			}
+			var subject = "";
+			if (fields["subject"]) {
+				subject = fields["subject"][0];
+			}
+			var from = fields["from"][0];
+			if (from.indexOf("<") > 0){
+					from = from.slice(from.indexOf("<")+1,from.indexOf(">"));
+			}
+			
+			//rea data extraction
+			if (from === "realestate.com.au@realestate.com.au" && subject.indexOf("Enquiry for Property ID") > 0){
+					from = html.slice(html.indexOf("Email:")+7,html.indexOf("</p>",html.indexOf("Email:")));
+			}
+
+			var to = fields["to"][0];
+			if (to.indexOf("@parse.candotech.com.au") > 0){
+					to = to.slice(to.indexOf("@parse.candotech.com.au")-24,to.indexOf("parse.candotech.com.au")-1);
+			} else if (to.indexOf("@parse.getaire.com.au") > 0){
+					to = to.slice(to.indexOf("@parse.getaire.com.au")-24,to.indexOf("parse.getaire.com.au")-1);
+			}      
+
+			var mail = new Email({from: from, to: to, subject: subject, text: text, html:html, jsonPayload: fields});
+
+			Email.create(mail, function(err, newlyCreated){
+					if (err) {
+							console.log(err);
+					} else {
+							var mailJson = {"from": from, "to": to, "subject": subject, "message": text, "html":html, "email": newlyCreated._id, "jsonPayload": newlyCreated.jsonPayload};
+							console.log("successfully saved to email queue");
+							console.log(mail);
+							//call the main app api
+							var options = {
+								uri: 'https://morning-retreat-82821.herokuapp.com/conversation',
+								method: 'POST',
+								json: true,   
+								body: mailJson
+							};
+	
+							request(options, function (error, response, body) {
+								if (error) {
+									console.log(err);
+								}
+								console.log("Response from main app:" + response);
+								console.log("Body from main app:" + body);
+							});                
+					 
+					}
+			});
+			res.writeHead(200, {'content-type': 'text/plain'});
+			res.write('received upload:\n\n');
+			res.end("thanks");          
+		}
 	});*/
 });
 
